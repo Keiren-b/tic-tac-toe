@@ -4,7 +4,8 @@
 }
 
 #square {
-    width: 20px;
-    height: 20px;
-    border: 1px solid black
+    min-width: 20px;
+    min-height: 20px;
+    border: 1px solid black;
+    text-align: center;
 }

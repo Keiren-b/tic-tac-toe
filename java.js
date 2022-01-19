@@ -1,5 +1,5 @@
 const gameboard = (function() {
-    const currentBoard = ['x','o','x','x','o','x','o','x','o'];
+    const currentBoard = ['','o','x','x','','x','o','','o'];
     return currentBoard
 })();
 
@@ -22,7 +22,7 @@ const gameControl = () => {}
 const createBoard = (function(){
     for (let i=0; i<9; i++){
         let square = document.createElement('div')
-        square.id = 'square'+ i
+        square.id = 'square'
         let board = document.getElementById('board')
         board.appendChild(square)
         square.setAttribute('data-label', i)       
@@ -31,7 +31,8 @@ const createBoard = (function(){
 
 const populateArray = (function(){
     for (let i=0; i<9; i++){
-     let square = document.getElementById('square'+i)
-     square.textContent = gameboard[i]
+    let board = document.getElementById('board')
+    
+    board.childNodes[i+1].textContent = gameboard[i]
     }
 })()
