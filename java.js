@@ -1,38 +1,138 @@
-const gameboard = (function() {
-    const currentBoard = ['','o','x','x','','x','o','','o'];
-    return currentBoard
-})();
 
-            console.log(gameboard)
-
-const player = (name, symbol) => {
-    const getName = () => name;
-    const getSymbol = () => symbol;
-    return {name, symbol}
-}
-
-const Jim = player('Jim', 'o')
-const Keiren = player('Keiren', 'x')
-
-            console.log(Keiren.name, Keiren.symbol)
-            console.log(Jim.name, Jim.symbol)
-
-const gameControl = () => {}
-
-const createBoard = (function(){
-    for (let i=0; i<9; i++){
-        let square = document.createElement('div')
-        square.id = 'square'
-        let board = document.getElementById('board')
-        board.appendChild(square)
-        square.setAttribute('data-label', i)       
-    }
-})()
-
-const populateArray = (function(){
-    for (let i=0; i<9; i++){
-    let board = document.getElementById('board')
+    const myGame = {
+    Gameboard: ['','','','','','','','',''],
+    Players: [],
+    playerTurn: '',
+    init: function() {
+        this.cacheDom();
+        this.bindEvents();
+        this.playerTurn = ''
     
-    board.childNodes[i+1].textContent = gameboard[i]
-    }
-})()
+    },
+
+    render: function(){
+        this.square.forEach(item =>{
+            item.textContent=this.Gameboard[item.getAttribute('data-index')]
+        })
+    },
+    
+    cacheDom: function() {
+        this.game = document.getElementsByClassName('game')
+        this.board = document.querySelector('.board')
+        this.input = document.querySelector('.input')
+        this.square = document.querySelectorAll('.square')
+        this.playBtn = document.getElementById('playBtn')
+    },
+    bindEvents: function(){
+        this.playBtn.addEventListener('click', this.assignPlayers.bind(this))
+        this.playBtn.addEventListener('click', this.whoseTurn.bind(this))
+        this.square.forEach(item => {item.addEventListener('click', this.markSpot.bind(this) )})
+    },
+   
+    testFunction: function Player(name, marker){
+       this.name = name
+       this.marker = marker
+   },
+
+   assignPlayers: function (){
+         
+            const player1 = new this.testFunction(this.input.children[0].value,'X');
+            const player2 = new this.testFunction(this.input.children[1].value,'O');
+            this.Players.push(player1);
+            this.Players.push(player2)
+},
+
+    whoseTurn: function (){
+        //radomly selects who should go first
+        if (this.playerTurn===''){
+            let x = Math.round(Math.random())
+            this.playerTurn=x 
+            console.log(this.playerTurn)
+        }
+        else if (this.playerTurn===0){
+            this.playerTurn=1
+            console.log(this.playerTurn)
+        }
+        else if (this.playerTurn===1) 
+        {this.playerTurn=0
+        console.log(this.playerTurn)}
+    },
+
+    //I DON'T LIKE THAT CHECK WIN IS HERE...MAYBE IT SHOULD BE SET OFF BY AN EVENT EMITTER OR SOMETHING
+
+    markSpot: function (event) {
+        this.whoseTurn()
+        let x = event.target.getAttribute('data-index')
+        if(this.playerTurn===0){
+            //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
+            if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                this.playerTurn=1
+                return}
+
+            else{
+                this.Gameboard[x]='X';
+                this.render();
+                
+            }
+            this.checkWin()
+        }
+        else if(this.playerTurn===1){
+              //an illegal move will prevent someone marking the same spot twice and will not change the player turn
+            if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                this.playerTurn=0
+                return}
+            else{
+            this.Gameboard[x]='O'
+            this.render()
+            
+        }
+        this.checkWin()
+        }
+        console.log(this.Gameboard)
+
+        // this.square[x].textContent='Poo'
+        // alert (event.target.getAttribute('data-index'))
+        // this.square[target.dataset.index].textContent='Poo'
+    },
+   
+    checkWin: function() {
+        if(
+        this.Gameboard[0]==this.Gameboard[1]&&this.Gameboard[0]==this.Gameboard[2]&&this.Gameboard[0]!=='' ||
+        this.Gameboard[3]==this.Gameboard[4]&&this.Gameboard[3]==this.Gameboard[5] &&this.Gameboard[3]!==''  ||
+        this.Gameboard[6]==this.Gameboard[7]&&this.Gameboard[6]==this.Gameboard[8] &&this.Gameboard[6]!=='' ||
+        this.Gameboard[0]==this.Gameboard[3]&&this.Gameboard[0]==this.Gameboard[6] &&this.Gameboard[0]!=='' ||
+        this.Gameboard[1]==this.Gameboard[4]&&this.Gameboard[1]==this.Gameboard[7] &&this.Gameboard[1]!=='' ||
+        this.Gameboard[2]==this.Gameboard[5]&&this.Gameboard[2]==this.Gameboard[8] &&this.Gameboard[2]!=='' ||
+        this.Gameboard[0]==this.Gameboard[4]&&this.Gameboard[0]==this.Gameboard[8] &&this.Gameboard[0]!=='' ||
+        this.Gameboard[2]==this.Gameboard[4]&&this.Gameboard[2]==this.Gameboard[6] &&this.Gameboard[2]!==''
+        )
+                
+        {
+            alert(this.Players[this.playerTurn].name + " is the winner")
+        }
+        if (this.Gameboard.indexOf('')==-1){
+            alert('draw')
+            }
+        },
+
+    
+
+
+    
+
+
+  
+    
+
+// drawer board (9) ['O', 'X', 'O', 'X', 'O', 'O', 'X', 'O', 'X']
+
+};
+
+myGame.init()
+
+// function Player(name, marker){
+//     this.name = name
+//     this.marker = marker
+// }
+
+// let player1 = new Player("Keiren", '0')
