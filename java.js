@@ -29,21 +29,27 @@
         this.progress = document.getElementById('progress')
     },
     bindEvents: function(){
-        this.markSpot = this.markSpot.bind(this)
-        this.playBtn.addEventListener('click', this.assignPlayers.bind(this))
-        this.playBtn.addEventListener('click', this.updateProgress.bind(this))
-        this.playBtn.addEventListener('click', this.whoseTurn.bind(this))
-        this.square.forEach(item => {item.addEventListener('click', this.markSpot)})
-        this.square.forEach(item => {item.addEventListener('click', this.updateProgress.bind(this) )})
-    },
-//    unbindEvents: function(){
-//     this.playBtn.removeEventListener('click', this.assignPlayers.bind(this))
-//     this.playBtn.removeEventListener('click', this.updateProgress.bind(this))
-//     this.playBtn.removeEventListener('click', this.whoseTurn.bind(this))
-//     this.square.forEach(item => {item.removeEventListener('click', this.markSpot.bind(this) )})
-//     this.square.forEach(item => {item.removeEventListener('click', this.updateProgress.bind(this) )})
         
-//    },
+        this.assignPlayers = this.assignPlayers.bind(this)
+        this.updateProgress = this.updateProgress.bind(this)
+        this.whoseTurn = this.whoseTurn.bind(this)
+        this.markSpot = this.markSpot.bind(this)
+        
+
+        this.playBtn.addEventListener('click', this.assignPlayers)
+        this.playBtn.addEventListener('click', this.updateProgress)
+        this.playBtn.addEventListener('click', this.whoseTurn)
+        this.square.forEach(item => {item.addEventListener('click', this.markSpot)})
+        this.square.forEach(item => {item.addEventListener('click', this.updateProgress)})
+    },
+   unbindEvents: function(){
+    this.playBtn.removeEventListener('click', this.assignPlayers)
+    this.playBtn.removeEventListener('click', this.updateProgress)
+    this.playBtn.removeEventListener('click', this.whoseTurn)
+    this.square.forEach(item => {item.removeEventListener('click', this.markSpot)})
+    this.square.forEach(item => {item.removeEventListener('click', this.updateProgress)})
+        
+   },
    
     testFunction: function Player(name, marker){
        this.name = name
@@ -129,8 +135,7 @@
         {   
             
             alert(this.Players[this.playerTurn].name + " is the winner")
-            this.square.forEach(item => {item.removeEventListener('click', this.markSpot)})
-
+            this.unbindEvents()
             
             //need to unbind event listener once someone has won
         };
