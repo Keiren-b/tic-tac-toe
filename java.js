@@ -63,6 +63,9 @@
             const player2 = new this.testFunction(this.input[1].value,'O');
             this.Players.push(player1);
             this.Players.push(player2);
+            this.playBtn.classList.add('hidden')
+            this.input[0].classList.add('hidden')
+            this.input[1].classList.add('hidden')
             this.render()
 },
 
