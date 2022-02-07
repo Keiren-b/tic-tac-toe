@@ -69,7 +69,7 @@
     //I DON'T LIKE THAT CHECK WIN IS HERE...MAYBE IT SHOULD BE SET OFF BY AN EVENT EMITTER OR SOMETHING
 
     markSpot: function (event) {
-        this.whoseTurn()
+        
         let x = event.target.getAttribute('data-index')
         if(this.playerTurn===0){
             //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
@@ -83,6 +83,7 @@
                 
             }
             this.checkWin()
+            this.whoseTurn()
         }
         else if(this.playerTurn===1){
               //an illegal move will prevent someone marking the same spot twice and will not change the player turn
@@ -95,6 +96,7 @@
             
         }
         this.checkWin()
+        this.whoseTurn()
         }
         console.log(this.Gameboard)
 
