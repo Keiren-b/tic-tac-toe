@@ -16,6 +16,7 @@
         })
         this.player1Banner.textContent="Player 1 is..."+this.Players[0].name+". "+this.Players[0].name+'\'s symbol is...'+this.Players[0].marker;
         this.player2Banner.textContent="Player 2 is..."+this.Players[1].name+". "+this.Players[1].name+'\'s symbol is...'+this.Players[1].marker;
+      
     },
     
     cacheDom: function() {
@@ -70,6 +71,7 @@
         if (this.playerTurn===''){
             let x = Math.round(Math.random())
             this.playerTurn=x 
+            this.updateProgress()
             console.log(this.playerTurn)
         }
         else if (this.playerTurn===0){
