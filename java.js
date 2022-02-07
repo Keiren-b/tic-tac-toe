@@ -146,7 +146,9 @@
             //need to unbind event listener once someone has won
         };
         if (this.Gameboard.indexOf('')==-1){
-            alert('draw')
+            this.progress.textContent = 'The Game is a Draw'
+            this.render()
+            this.unbindEvents()
             
             }
         },
