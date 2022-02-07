@@ -29,12 +29,21 @@
         this.progress = document.getElementById('progress')
     },
     bindEvents: function(){
+        this.markSpot = this.markSpot.bind(this)
         this.playBtn.addEventListener('click', this.assignPlayers.bind(this))
         this.playBtn.addEventListener('click', this.updateProgress.bind(this))
         this.playBtn.addEventListener('click', this.whoseTurn.bind(this))
-        this.square.forEach(item => {item.addEventListener('click', this.markSpot.bind(this) )})
+        this.square.forEach(item => {item.addEventListener('click', this.markSpot)})
         this.square.forEach(item => {item.addEventListener('click', this.updateProgress.bind(this) )})
     },
+//    unbindEvents: function(){
+//     this.playBtn.removeEventListener('click', this.assignPlayers.bind(this))
+//     this.playBtn.removeEventListener('click', this.updateProgress.bind(this))
+//     this.playBtn.removeEventListener('click', this.whoseTurn.bind(this))
+//     this.square.forEach(item => {item.removeEventListener('click', this.markSpot.bind(this) )})
+//     this.square.forEach(item => {item.removeEventListener('click', this.updateProgress.bind(this) )})
+        
+//    },
    
     testFunction: function Player(name, marker){
        this.name = name
@@ -117,12 +126,17 @@
         this.Gameboard[2]==this.Gameboard[4]&&this.Gameboard[2]==this.Gameboard[6] &&this.Gameboard[2]!==''
         )
                 
-        {
+        {   
+            
             alert(this.Players[this.playerTurn].name + " is the winner")
+            this.square.forEach(item => {item.removeEventListener('click', this.markSpot)})
+
+            
             //need to unbind event listener once someone has won
-        }
+        };
         if (this.Gameboard.indexOf('')==-1){
             alert('draw')
+            
             }
         },
 
@@ -131,10 +145,14 @@
             this.progress.textContent = 'It is '+this.Players[this.playerTurn].name+'\'s turn'
             }
             this.render() 
-        }
+        },
+
+       
+
+
 
     
-        //there is some issue with the ramdom assigning of whose turn it is
+
 
 
     
@@ -148,6 +166,31 @@
 };
 
 myGame.init()
+
+var events = {
+    events: {},
+    on: function (eventName, fn) {
+      this.events[eventName] = this.events[eventName] || [];
+      this.events[eventName].push(fn);
+    },
+    off: function(eventName, fn) {
+      if (this.events[eventName]) {
+        for (var i = 0; i < this.events[eventName].length; i++) {
+          if (this.events[eventName][i] === fn) {
+            this.events[eventName].splice(i, 1);
+            break;
+          }
+        };
+      }
+    },
+    emit: function (eventName, data) {
+      if (this.events[eventName]) {
+        this.events[eventName].forEach(function(fn) {
+          fn(data);
+        });
+      }
+    }
+  };
 
 // function Player(name, marker){
 //     this.name = name
