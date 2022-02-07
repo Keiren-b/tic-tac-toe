@@ -28,6 +28,7 @@
         this.player1Banner = document.getElementById('player1Banner')
         this.player2Banner = document.getElementById('player2Banner')
         this.progress = document.getElementById('progress')
+        this.computer = document.getElementById('computer')
     },
     bindEvents: function(){
         
@@ -58,7 +59,17 @@
    },
 
    assignPlayers: function (){
-         
+            if (this.computer.checked = 'true'){
+                const player1 = new this.testFunction(this.input[0].value,'X');
+                const player2 = new this.testFunction('The Computer', 'O');
+                this.Players.push(player1);
+                this.Players.push(player2);
+                this.playBtn.classList.add('hidden')
+                this.input[0].classList.add('hidden')
+                this.input[1].classList.add('hidden')
+                this.render()
+            }
+            else{
             const player1 = new this.testFunction(this.input[0].value,'X');
             const player2 = new this.testFunction(this.input[1].value,'O');
             this.Players.push(player1);
@@ -67,6 +78,7 @@
             this.input[0].classList.add('hidden')
             this.input[1].classList.add('hidden')
             this.render()
+            }
 },
 
     whoseTurn: function (){
@@ -120,9 +132,7 @@
         }
         console.log(this.Gameboard)
 
-        // this.square[x].textContent='Poo'
-        // alert (event.target.getAttribute('data-index'))
-        // this.square[target.dataset.index].textContent='Poo'
+      
     },
    
     checkWin: function() {
@@ -159,6 +169,8 @@
             }
             this.render() 
         },
+
+       
 
        
 
