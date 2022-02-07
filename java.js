@@ -14,19 +14,26 @@
         this.square.forEach(item =>{
             item.textContent=this.Gameboard[item.getAttribute('data-index')]
         })
+        this.player1Banner.textContent="Player 1 is..."+this.Players[0].name+". "+this.Players[0].name+'\'s symbol is...'+this.Players[0].marker;
+        this.player2Banner.textContent="Player 2 is..."+this.Players[1].name+". "+this.Players[1].name+'\'s symbol is...'+this.Players[1].marker;
     },
     
     cacheDom: function() {
         this.game = document.getElementsByClassName('game')
         this.board = document.querySelector('.board')
-        this.input = document.querySelector('.input')
+        this.input = document.querySelectorAll('input')
         this.square = document.querySelectorAll('.square')
         this.playBtn = document.getElementById('playBtn')
+        this.player1Banner = document.getElementById('player1Banner')
+        this.player2Banner = document.getElementById('player2Banner')
+        this.progress = document.getElementById('progress')
     },
     bindEvents: function(){
         this.playBtn.addEventListener('click', this.assignPlayers.bind(this))
+        this.playBtn.addEventListener('click', this.updateProgress.bind(this))
         this.playBtn.addEventListener('click', this.whoseTurn.bind(this))
         this.square.forEach(item => {item.addEventListener('click', this.markSpot.bind(this) )})
+        this.square.forEach(item => {item.addEventListener('click', this.updateProgress.bind(this) )})
     },
    
     testFunction: function Player(name, marker){
@@ -36,10 +43,11 @@
 
    assignPlayers: function (){
          
-            const player1 = new this.testFunction(this.input.children[0].value,'X');
-            const player2 = new this.testFunction(this.input.children[1].value,'O');
+            const player1 = new this.testFunction(this.input[0].value,'X');
+            const player2 = new this.testFunction(this.input[1].value,'O');
             this.Players.push(player1);
-            this.Players.push(player2)
+            this.Players.push(player2);
+            this.render()
 },
 
     whoseTurn: function (){
@@ -109,13 +117,22 @@
                 
         {
             alert(this.Players[this.playerTurn].name + " is the winner")
+            //need to unbind event listener once someone has won
         }
         if (this.Gameboard.indexOf('')==-1){
             alert('draw')
             }
         },
 
+        updateProgress: function (){
+            if (this.playerTurn!==''){
+            this.progress.textContent = 'It is '+this.Players[this.playerTurn].name+'\'s turn'
+            }
+            this.render() 
+        }
+
     
+        //there is some issue with the ramdom assigning of whose turn it is
 
 
     
