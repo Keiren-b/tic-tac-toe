@@ -136,7 +136,8 @@
                 
         {   
             
-            alert(this.Players[this.playerTurn].name + " is the winner")
+            this.progress.textContent = this.Players[this.playerTurn].name + " is the winner";
+            this.render()
             this.unbindEvents()
             
             //need to unbind event listener once someone has won
