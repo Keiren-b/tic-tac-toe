@@ -59,17 +59,7 @@
    },
 
    assignPlayers: function (){
-            if (this.computer.checked = 'true'){
-                const player1 = new this.testFunction(this.input[0].value,'X');
-                const player2 = new this.testFunction('The Computer', 'O');
-                this.Players.push(player1);
-                this.Players.push(player2);
-                this.playBtn.classList.add('hidden')
-                this.input[0].classList.add('hidden')
-                this.input[1].classList.add('hidden')
-                this.render()
-            }
-            else{
+
             const player1 = new this.testFunction(this.input[0].value,'X');
             const player2 = new this.testFunction(this.input[1].value,'O');
             this.Players.push(player1);
@@ -78,7 +68,7 @@
             this.input[0].classList.add('hidden')
             this.input[1].classList.add('hidden')
             this.render()
-            }
+    
 },
 
     whoseTurn: function (){
@@ -170,56 +160,8 @@
             this.render() 
         },
 
-       
-
-       
-
-
-
-    
-
-
-
-    
-
-
-  
-    
-
-// drawer board (9) ['O', 'X', 'O', 'X', 'O', 'O', 'X', 'O', 'X']
 
 };
 
 myGame.init()
 
-var events = {
-    events: {},
-    on: function (eventName, fn) {
-      this.events[eventName] = this.events[eventName] || [];
-      this.events[eventName].push(fn);
-    },
-    off: function(eventName, fn) {
-      if (this.events[eventName]) {
-        for (var i = 0; i < this.events[eventName].length; i++) {
-          if (this.events[eventName][i] === fn) {
-            this.events[eventName].splice(i, 1);
-            break;
-          }
-        };
-      }
-    },
-    emit: function (eventName, data) {
-      if (this.events[eventName]) {
-        this.events[eventName].forEach(function(fn) {
-          fn(data);
-        });
-      }
-    }
-  };
-
-// function Player(name, marker){
-//     this.name = name
-//     this.marker = marker
-// }
-
-// let player1 = new Player("Keiren", '0')
