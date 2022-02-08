@@ -29,20 +29,24 @@
         this.player2Banner = document.getElementById('player2Banner')
         this.progress = document.getElementById('progress')
         this.computer = document.getElementById('computer')
+        this.label  = document.querySelector('label')
     },
     bindEvents: function(){
         
         this.assignPlayers = this.assignPlayers.bind(this)
         this.updateProgress = this.updateProgress.bind(this)
         this.whoseTurn = this.whoseTurn.bind(this)
-        this.markSpot = this.markSpot.bind(this)
+        // this.markSpot = this.markSpot.bind(this)
+        this.markSpotComputer = this.markSpotComputer.bind(this)
         
 
         this.playBtn.addEventListener('click', this.assignPlayers)
         this.playBtn.addEventListener('click', this.updateProgress)
         this.playBtn.addEventListener('click', this.whoseTurn)
-        this.square.forEach(item => {item.addEventListener('click', this.markSpot)})
+        // this.square.forEach(item => {item.addEventListener('click', this.markSpot)})
+        this.square.forEach(item => {item.addEventListener('click', this.markSpotComputer)})
         this.square.forEach(item => {item.addEventListener('click', this.updateProgress)})
+
     },
    unbindEvents: function(){
     this.playBtn.removeEventListener('click', this.assignPlayers)
@@ -61,12 +65,24 @@
    assignPlayers: function (){
 
             const player1 = new this.testFunction(this.input[0].value,'X');
-            const player2 = new this.testFunction(this.input[1].value,'O');
             this.Players.push(player1);
-            this.Players.push(player2);
+
+            if(this.computer.checked=true && this.input[1]==''){
+                const player2 = new this.testFunction('The Computer','O');
+                this.Players.push(player2);
+            }
+            else{
+                const player2 = new this.testFunction(this.input[1].value,'O');
+                this.Players.push(player2);
+            }
+            
+            
+            
             this.playBtn.classList.add('hidden')
             this.input[0].classList.add('hidden')
             this.input[1].classList.add('hidden')
+            this.computer.classList.add('hidden')
+            this.label.classList.add('hidden')
             this.render()
     
 },
@@ -93,6 +109,7 @@
     markSpot: function (event) {
         
         let x = event.target.getAttribute('data-index')
+
         if(this.playerTurn===0){
             //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
             if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
@@ -160,8 +177,50 @@
             this.render() 
         },
 
+        randomNumber: function(){
+            return 4
+        },
 
+        markSpotComputer: function (event) {
+        
+            let x = event.target.getAttribute('data-index')
+
+            
+            if(this.playerTurn===0){
+                //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
+                if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                    this.playerTurn=1
+                    return}
+    
+                else{
+                    this.Gameboard[x]='X';
+                    this.render();
+                    
+                }
+                this.checkWin()
+                this.whoseTurn()
+            }
+            else if(this.playerTurn===1){
+                let y = this.randomNumber()
+                  //an illegal move will prevent someone marking the same spot twice and will not change the player turn
+                if(this.Gameboard[y]=='X' || this.Gameboard[y]=='O'){
+                    this.playerTurn=0
+                    return}
+                else{
+                this.Gameboard[y]='O'
+                this.render()
+                
+            }
+            this.checkWin()
+            this.whoseTurn()
+            }
+            console.log(this.Gameboard)
+    
+          
+        },
 };
+
+
 
 myGame.init()
 
