@@ -105,40 +105,69 @@
     //I DON'T LIKE THAT CHECK WIN IS HERE...MAYBE IT SHOULD BE SET OFF BY AN EVENT EMITTER OR SOMETHING
 
     markSpot: function (event) {
-        
-        let x = event.target.getAttribute('data-index')
 
-        if(this.playerTurn===0){
-            //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
-            if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
-                this.playerTurn=1
-                return}
+        if(this.computer.checked=false){
+            let x = event.target.getAttribute('data-index')
 
-            else{
-                this.Gameboard[x]='X';
-                this.render();
+            if(this.playerTurn===0){
+                //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
+                if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                    this.playerTurn=1
+                    return}
+
+                else{
+                    this.Gameboard[x]='X';
+                    this.render();
+                    
+                }
+                this.checkWin()
+                this.whoseTurn()
+            }
+            else if(this.playerTurn===1){
+                //an illegal move will prevent someone marking the same spot twice and will not change the player turn
+                if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                    this.playerTurn=0
+                    return}
+                else{
+                this.Gameboard[x]='O'
+                this.render()
                 
             }
             this.checkWin()
             this.whoseTurn()
-        }
-        else if(this.playerTurn===1){
-              //an illegal move will prevent someone marking the same spot twice and will not change the player turn
-            if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
-                this.playerTurn=0
-                return}
-            else{
-            this.Gameboard[x]='O'
-            this.render()
-            
-        }
-        this.checkWin()
-        this.whoseTurn()
-        }
-        console.log(this.Gameboard)
+            }
+            console.log(this.Gameboard)
 
-      
-    },
+        }
+        //this runs the program when computer is playing...but it is not finished yet
+        else{
+
+            if(this.playerTurn===0){
+                let x = event.target.getAttribute('data-index')
+                //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
+                if(this.Gameboard[x]=='X' || this.Gameboard[x]=='O'){
+                    this.playerTurn=1
+                    return}
+
+                else{
+                    this.Gameboard[x]='X';
+                    this.render();
+                    
+                }
+                this.checkWin()
+                this.whoseTurn()
+            }
+            else if(this.playerTurn===1){
+                let x = this.randomNumber()
+                this.checkBoard(x)
+                this.Gameboard[x]='O'
+                this.render()
+                this.checkWin()
+                this.whoseTurn()
+            }}
+
+        
+        },
    
     checkWin: function() {
         if(
@@ -176,8 +205,18 @@
         },
 
         randomNumber: function(){
-            return 4
+            return Math.floor(Math.random() * (8 - 0 + 1) + 0)
         },
+
+        checkBoard: function(x){
+           if (this.Gameboard.indexOf(x)!==-1){
+               this.checkBoard(this.randomNumber)
+           }
+           else {
+                return
+           }
+        }
+
 
         // Computer: function () {
         
