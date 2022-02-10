@@ -37,6 +37,7 @@
         this.updateProgress = this.updateProgress.bind(this)
         this.whoseTurn = this.whoseTurn.bind(this)
         this.markSpot = this.markSpot.bind(this)
+
        
 
         this.playBtn.addEventListener('click', this.assignPlayers)
@@ -104,6 +105,7 @@
 
     //I DON'T LIKE THAT CHECK WIN IS HERE...MAYBE IT SHOULD BE SET OFF BY AN EVENT EMITTER OR SOMETHING
 
+    
     markSpot: function (event) {
 
         if(this.computer.checked=false){
