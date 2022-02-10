@@ -66,7 +66,6 @@ function whoseTurn(input){
   square.forEach(item =>{item.addEventListener('click', clickUpdate)})
   playBtn.addEventListener('click', playBtnUpdate)
   events.on('squareClick', markBoard)
-  events.on('squareClick', pushArray)
   events.on('squareClick', checkWin)
   events.on('squareClick', whoseTurn)
   
@@ -75,8 +74,10 @@ function whoseTurn(input){
 
 
   //render
-
-
+  function render(){
+    square.forEach(item =>{
+        item.textContent=myGame.Gameboard[item.getAttribute('data-index')]
+    })}
 
 
 // *** This shouldn't be on until the play button is clicked ====> perhaps put events off in init function?
@@ -108,16 +109,54 @@ function whoseTurn(input){
    
       
       else if (myGame.playerTurn==0){
-          square[x].textContent="X"
+        myGame.Gameboard[x]="X"
+        render()
       }
       else {
-        square[x].textContent='O'
+        myGame.Gameboard[x]='O'
+        render()
       }
   }
 
-  function pushArray(x){
-    myGame.Gameboard[x] = square[x].textContent
-  };
+//   function rand(){
+//     return Math.floor(Math.random() * (8 - 0 + 1) + 0)
+//   }
+
+//   function searchGamboard(num){
+//       return myGame.Gameboard[num]
+//   }
+//   function computer(){
+//      let num = rand()
+//      let search = searchGamboard(num)
+//      if (search == "X" || search == "O"){
+//          alert()
+//      }
+
+function wild(){
+let empties = [];
+
+     function emptyIndex(){
+       
+         
+        for (let i=0; i<9; i++){
+            if(myGame.Gameboard[i]==""){
+                empties.push(i)
+            }
+            else{}
+        }}
+     emptyIndex()
+
+     function getRandomIntInclusive(min, max) {
+  
+        return Math.floor(Math.random() * (max - min + 1) + min); 
+     }
+
+     let rand = getRandomIntInclusive(0, empties.length)
+
+     let answer = empties[rand]
+    
+    return answer
+    }
 
   function checkWin() {
     if(
