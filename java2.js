@@ -58,28 +58,42 @@ function whoseTurn(input){
 };
 
 //********************************************************************* */
+//cache
   square = document.querySelectorAll('.square')
   playBtn = playBtn = document.getElementById('playBtn')
 
+  //bind
+  square.forEach(item =>{item.addEventListener('click', clickUpdate)})
+  playBtn.addEventListener('click', playBtnUpdate)
+  events.on('squareClick', markBoard)
+  events.on('squareClick', pushArray)
+  events.on('squareClick', checkWin)
+  events.on('squareClick', whoseTurn)
+  
+  events.on('playBtn', whoseTurn)
+
+
+
+  //render
 
 
 
 
-  square.forEach(item =>{item.addEventListener('click', update)})
-  playBtn.addEventListener('click', ()=>{events.emit('playBtn', '')})
+// *** This shouldn't be on until the play button is clicked ====> perhaps put events off in init function?
 
-  function update(e){
+
+  function clickUpdate(e){
     // e.target.textContent=e.target.getAttribute('data-index')
     events.emit('squareClick', e.target.getAttribute('data-index'))
   }
 
-
+  function playBtnUpdate(){
+    events.emit('playBtn', '')
+  }
 
   
-      events.on('squareClick', markBoard)
-      events.on('squareClick', pushArray)
-      events.on('squareClick', whoseTurn)
-      events.on('playBtn', whoseTurn)
+      
+  
 
   
   function markBoard(x){
@@ -103,4 +117,33 @@ function whoseTurn(input){
 
   function pushArray(x){
     myGame.Gameboard[x] = square[x].textContent
-  }
+  };
+
+  function checkWin() {
+    if(
+    myGame.Gameboard[0]==myGame.Gameboard[1]&&myGame.Gameboard[0]==myGame.Gameboard[2]&&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[3]==myGame.Gameboard[4]&&myGame.Gameboard[3]==myGame.Gameboard[5] &&myGame.Gameboard[3]!==''  ||
+    myGame.Gameboard[6]==myGame.Gameboard[7]&&myGame.Gameboard[6]==myGame.Gameboard[8] &&myGame.Gameboard[6]!=='' ||
+    myGame.Gameboard[0]==myGame.Gameboard[3]&&myGame.Gameboard[0]==myGame.Gameboard[6] &&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[1]==myGame.Gameboard[4]&&myGame.Gameboard[1]==myGame.Gameboard[7] &&myGame.Gameboard[1]!=='' ||
+    myGame.Gameboard[2]==myGame.Gameboard[5]&&myGame.Gameboard[2]==myGame.Gameboard[8] &&myGame.Gameboard[2]!=='' ||
+    myGame.Gameboard[0]==myGame.Gameboard[4]&&myGame.Gameboard[0]==myGame.Gameboard[8] &&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[2]==myGame.Gameboard[4]&&myGame.Gameboard[2]==myGame.Gameboard[6] &&myGame.Gameboard[2]!==''
+    )
+            
+    {   
+        alert('winner')
+        // myGame.progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
+        // myGame.render()
+        // myGame.unbindEvents()
+        
+        //need to unbind event listener once someone has won
+    };
+    if (myGame.Gameboard.indexOf('')==-1){
+        alert('draw')
+        // this.progress.textContent = 'The Game is a Draw'
+        // this.render()
+        // this.unbindEvents()
+        
+        }
+    }
