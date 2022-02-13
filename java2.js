@@ -27,7 +27,8 @@ var events = {
 //********************************************************************* */
 const myGame = {
     Gameboard: ['','','','','','','','',''],
-    playerTurn: ''
+    playerTurn: '',
+    computerPlayer: false
 }
 //********************************************************************* */
 // function initialTurn(){
@@ -60,19 +61,25 @@ function whoseTurn(input){
 //********************************************************************* */
 //cache
   square = document.querySelectorAll('.square')
-  playBtn = playBtn = document.getElementById('playBtn')
+  playBtn = document.getElementById('playBtn')
+  computerPlayBtn = document.getElementById('computerPlay')
+
 
   //bind
   square.forEach(item =>{item.addEventListener('click', clickUpdate)})
   playBtn.addEventListener('click', playBtnUpdate)
+  computerPlayBtn.addEventListener('click', ()=>{myGame.computerPlayer=true} )
   events.on('squareClick', markBoard)
-  events.on('squareClick', checkWin)
-  events.on('squareClick', whoseTurn)
   
   events.on('playBtn', whoseTurn)
+  
+  events.on('squareClick', checkWin)
+  events.on('squareClick', whoseTurn)
+
+  
 
 
-
+ 
   //render
   function render(){
     square.forEach(item =>{
@@ -93,11 +100,12 @@ function whoseTurn(input){
   }
 
   
-      
-  
+
 
   
+
   function markBoard(x){
+      
       //an illegal move will prevent someone marking the same spot twice and will not change the player turn. This is acheived by setting the player turn to the opposite before calling whoseTurn() again.
       if (square[x].textContent=="X" || square[x].textContent=="O" && myGame.playerTurn==0)
       {alert ('Choose another Square')
@@ -111,12 +119,36 @@ function whoseTurn(input){
       else if (myGame.playerTurn==0){
         myGame.Gameboard[x]="X"
         render()
+        if(myGame.computerPlayer==true){
+        
+            computerGame()
+        }
       }
-      else {
+      
+      else if (myGame.playerTurn==1){
+        if(myGame.computerPlayer==true){
+          computerGame()
+        }
+        else{
         myGame.Gameboard[x]='O'
         render()
+        }
       }
   }
+
+  function computerGame(x){
+//   if(myGame.playerTurn==0){    
+//   markBoard()
+//   }
+
+//  else {
+      markBoard(computerMove())
+      render()
+      checkWin()
+      whoseTurn()
+    // }
+  }
+
 
 //   function rand(){
 //     return Math.floor(Math.random() * (8 - 0 + 1) + 0)
@@ -132,13 +164,13 @@ function whoseTurn(input){
 //          alert()
 //      }
 
-function wild(){
+function computerMove(){
 let empties = [];
 
      function emptyIndex(){
        
          
-        for (let i=0; i<9; i++){
+        for (let i=0; i<=9; i++){
             if(myGame.Gameboard[i]==""){
                 empties.push(i)
             }
@@ -154,9 +186,11 @@ let empties = [];
      let rand = getRandomIntInclusive(0, empties.length)
 
      let answer = empties[rand]
-    
+ 
     return answer
     }
+
+
 
   function checkWin() {
     if(
