@@ -66,17 +66,51 @@ function whoseTurn(input){
 
 
   //bind
-  square.forEach(item =>{item.addEventListener('click', clickUpdate)})
-  playBtn.addEventListener('click', playBtnUpdate)
-  computerPlayBtn.addEventListener('click', ()=>{myGame.computerPlayer=true} )
-  events.on('squareClick', markBoard)
+  //PLAY BUTTON
   
+  events.on('playBtn', squareEventListenerAdd)
   events.on('playBtn', whoseTurn)
   
-  events.on('squareClick', checkWin)
-  events.on('squareClick', whoseTurn)
+
+      function squareEventListenerAdd(input){
+      square.forEach(item =>{item.addEventListener('click', clickUpdate)})
+      }
+
+  function clickUpdate(e){
+    // e.target.textContent=e.target.getAttribute('data-index')
+    events.emit('squareClick', e.target.getAttribute('data-index'))
+  }
+  events.on('squareClick', markBoard)
 
   
+  events.on('boardChanged', checkWin)
+  events.on('boardChanged', whoseTurn)
+
+  //maybe these should be triggered instead on render or from event emitters in other places
+  // events.on('squareClick', checkWin)
+  // events.on('squareClick', whoseTurn)
+
+  //play btn
+  playBtn.addEventListener('click', playBtnUpdate)
+  function playBtnUpdate(){
+    events.emit('playBtn', true)
+  }
+
+ 
+
+  //computer Btn
+  computerPlayBtn.addEventListener('click', computerBtn)
+  function computerBtn(){
+    events.emit('computerBtn','')
+  }
+  events.on('computerBtn', computerUnBind)
+  
+  
+function computerUnBind(){
+   events.off('squareClick', markBoard)
+}
+
+ 
 
 
  
@@ -90,18 +124,11 @@ function whoseTurn(input){
 // *** This shouldn't be on until the play button is clicked ====> perhaps put events off in init function?
 
 
-  function clickUpdate(e){
-    // e.target.textContent=e.target.getAttribute('data-index')
-    events.emit('squareClick', e.target.getAttribute('data-index'))
-  }
-
-  function playBtnUpdate(){
-    events.emit('playBtn', '')
-  }
-
   
 
+ 
 
+  
   
 
   function markBoard(x){
@@ -119,35 +146,19 @@ function whoseTurn(input){
       else if (myGame.playerTurn==0){
         myGame.Gameboard[x]="X"
         render()
-        if(myGame.computerPlayer==true){
+        events.emit('boardChanged', '')
         
-            computerGame()
-        }
       }
       
       else if (myGame.playerTurn==1){
-        if(myGame.computerPlayer==true){
-          computerGame()
-        }
-        else{
+       
         myGame.Gameboard[x]='O'
         render()
-        }
+        events.emit('boardChanged', '')
       }
   }
 
-  function computerGame(x){
-//   if(myGame.playerTurn==0){    
-//   markBoard()
-//   }
-
-//  else {
-      markBoard(computerMove())
-      render()
-      checkWin()
-      whoseTurn()
-    // }
-  }
+  
 
 
 //   function rand(){
@@ -190,7 +201,15 @@ let empties = [];
     return answer
     }
 
+    let computer = true
+    function computerGame(x){
 
+      if (computer==true || myGame.playerTurn==1){
+
+        markBoard(computerMove())
+    }
+    else {markBoard(x)}
+  }
 
   function checkWin() {
     if(
