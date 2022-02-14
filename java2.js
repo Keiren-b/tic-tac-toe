@@ -158,6 +158,20 @@ function computerUnBind(){
       }
   }
 
+  function computerGame(x){
+    if (myGame.playerTurn==0){
+
+      myGame.Gameboard[x]="X"
+      render()
+      events.emit('boardChanged', '')
+    }
+    else if (myGame.playerTurn==1){
+       
+        myGame.Gameboard[computerMove()]='O'
+        render()
+        events.emit('boardChanged', '')
+      }
+  }
   
 
 
@@ -201,15 +215,7 @@ let empties = [];
     return answer
     }
 
-    let computer = true
-    function computerGame(x){
-
-      if (computer==true || myGame.playerTurn==1){
-
-        markBoard(computerMove())
-    }
-    else {markBoard(x)}
-  }
+ 
 
   function checkWin() {
     if(
