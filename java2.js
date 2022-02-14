@@ -59,6 +59,8 @@ function whoseTurn(input){
 };
 
 //********************************************************************* */
+
+// there are issues with presing play button once and not being able to call multiple functions
 //cache
   square = document.querySelectorAll('.square')
   playBtn = document.getElementById('playBtn')
@@ -70,6 +72,7 @@ function whoseTurn(input){
   
   events.on('playBtn', squareEventListenerAdd)
   events.on('playBtn', whoseTurn)
+  events.on('playBtn', computerGame)
   
 
       function squareEventListenerAdd(input){
@@ -80,7 +83,8 @@ function whoseTurn(input){
     // e.target.textContent=e.target.getAttribute('data-index')
     events.emit('squareClick', e.target.getAttribute('data-index'))
   }
-  events.on('squareClick', markBoard)
+  // events.on('squareClick', markBoard)
+  events.on('squareClick', computerGame)
 
   
   events.on('boardChanged', checkWin)
@@ -159,19 +163,38 @@ function computerUnBind(){
   }
 
   function computerGame(x){
-    if (myGame.playerTurn==0){
-
+    if (myGame.playerTurn==1){
+      myGame.Gameboard[computerMove()]='O'
+        render()
+        events.emit('boardChanged', '')
+    }
+    else{
       myGame.Gameboard[x]="X"
       render()
       events.emit('boardChanged', '')
-    }
-    else if (myGame.playerTurn==1){
-       
-        myGame.Gameboard[computerMove()]='O'
+      myGame.Gameboard[computerMove()]='O'
         render()
         events.emit('boardChanged', '')
-      }
+
+    }
   }
+
+
+
+
+  //   if (myGame.playerTurn==0){
+
+  //     myGame.Gameboard[x]="X"
+  //     render()
+  //     events.emit('boardChanged', '')
+  //   }
+  //   else if (myGame.playerTurn==1){
+       
+  //       myGame.Gameboard[computerMove()]='O'
+  //       render()
+  //       events.emit('boardChanged', '')
+  //     }
+  // }
   
 
 
