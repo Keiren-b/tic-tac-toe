@@ -94,7 +94,7 @@ function whoseTurn(input){
   
   events.on('boardChanged', checkWin)
   events.on('boardChanged', whoseTurn)
-
+  events.on('callComputer', computerGameComputerMove)
 
   
  
@@ -158,9 +158,20 @@ function computerUnBind(){
         events.emit('boardChanged', '')
       }
   }
+function computerGame(x){
+  if (myGame.playerTurn==0){
+    computerGameHumanMove(x)
+    
+  }
 
-  function computerGame(x){
-    if (myGame.playerTurn==0){
+  else if (myGame.playerTurn==1){
+    computerGameComputerMove(x)
+  }
+
+
+}
+  function computerGameHumanMove(x){
+    
       if(x==""){return}
       else if (square[x].textContent=="X" || square[x].textContent=="O")
       {alert ('Choose another Square')
@@ -169,16 +180,18 @@ function computerUnBind(){
       myGame.Gameboard[x]="X"
       render()
       events.emit('boardChanged', '')
+      events.emit('callComputer', "")
       }
     }
     
-    else if (myGame.playerTurn==1){
+    function computerGameComputerMove(x){
       
       x=computerMove()
+      console.log('x for this round is '+x)
       myGame.Gameboard[x]='O'
-      render()
+      setTimeout(render, 500)
       events.emit('boardChanged', '')
-    }
+  
   }
 
 
@@ -220,7 +233,7 @@ let empties = [];
      function emptyIndex(){
        
          
-        for (let i=0; i<=9; i++){
+        for (let i=0; i<myGame.Gameboard.length; i++){
             if(myGame.Gameboard[i]==""){
                 empties.push(i)
             }
@@ -234,7 +247,7 @@ let empties = [];
      }
 
      let rand = getRandomIntInclusive(0, empties.length)
-
+    //  if(rand=9){()=>alert('rand = '+rand)}
      let answer = empties[rand]
  
     return answer
