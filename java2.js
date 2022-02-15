@@ -54,8 +54,7 @@ function whoseTurn(input){
     else if (myGame.playerTurn===1) 
     {myGame.playerTurn=0
     console.log(myGame.playerTurn)}
-    
-    events.off('playBtn', whoseTurn)
+
 };
 
 //********************************************************************* */
@@ -69,9 +68,15 @@ function whoseTurn(input){
 
   //bind
   //PLAY BUTTON
+  playBtn.addEventListener('click', playBtnUpdate)
   
+  function playBtnUpdate(){
+    events.emit('playBtn', '')
+  }
+
   events.on('playBtn', squareEventListenerAdd)
   events.on('playBtn', whoseTurn)
+
   events.on('playBtn', computerGame)
   
 
@@ -90,16 +95,8 @@ function whoseTurn(input){
   events.on('boardChanged', checkWin)
   events.on('boardChanged', whoseTurn)
 
-  //maybe these should be triggered instead on render or from event emitters in other places
-  // events.on('squareClick', checkWin)
-  // events.on('squareClick', whoseTurn)
 
-  //play btn
-  playBtn.addEventListener('click', playBtnUpdate)
-  function playBtnUpdate(){
-    events.emit('playBtn', true)
-  }
-
+  
  
 
   //computer Btn
@@ -163,19 +160,24 @@ function computerUnBind(){
   }
 
   function computerGame(x){
-    if (myGame.playerTurn==1){
-      myGame.Gameboard[computerMove()]='O'
-        render()
-        events.emit('boardChanged', '')
-    }
-    else{
+    if (myGame.playerTurn==0){
+      if(x==""){return}
+      else if (square[x].textContent=="X" || square[x].textContent=="O")
+      {alert ('Choose another Square')
+      myGame.playerTurn=0}
+      else{
       myGame.Gameboard[x]="X"
       render()
       events.emit('boardChanged', '')
-      myGame.Gameboard[computerMove()]='O'
-        render()
-        events.emit('boardChanged', '')
-
+      }
+    }
+    
+    else if (myGame.playerTurn==1){
+      
+      x=computerMove()
+      myGame.Gameboard[x]='O'
+      render()
+      events.emit('boardChanged', '')
     }
   }
 
