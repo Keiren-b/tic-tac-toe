@@ -31,15 +31,6 @@ const myGame = {
     computerPlayer: false
 }
 //********************************************************************* */
-// function initialTurn(){
-//     //radomly selects who should go first
-    
-//         myGame.playerTurn = Math.round(Math.random())
-        
-//         // this.updateProgress()
-        
-//     }
-// initialTurn();
 
 function whoseTurn(input){
 
@@ -71,14 +62,22 @@ function whoseTurn(input){
   playBtn.addEventListener('click', playBtnUpdate)
   
   function playBtnUpdate(){
-    events.emit('playBtn', '')
+    events.emit('playBtn', 'human')
   }
 
   events.on('playBtn', squareEventListenerAdd)
   events.on('playBtn', whoseTurn)
+  events.on('playBtn', compOrNot)
 
-  events.on('playBtn', computerGame)
+  // COMPUTER BUTTON
+  computerPlayBtn.addEventListener('click', computerPlayBtnUpdate)
   
+  function computerPlayBtnUpdate(){
+    events.emit('computerPlayBtn', 'computer')
+  }
+  events.on('computerPlayBtn', squareEventListenerAdd)
+  events.on('computerPlayBtn', whoseTurn)
+  events.on('computerPlayBtn', compOrNot)
 
       function squareEventListenerAdd(input){
       square.forEach(item =>{item.addEventListener('click', clickUpdate)})
@@ -88,9 +87,18 @@ function whoseTurn(input){
     // e.target.textContent=e.target.getAttribute('data-index')
     events.emit('squareClick', e.target.getAttribute('data-index'))
   }
-  // events.on('squareClick', markBoard)
-  events.on('squareClick', computerGame)
 
+  function compOrNot(check){
+  if(check=='human'){
+  events.on('squareClick', markBoard)
+  alert('human')
+  }
+  else if (check=='computer'){
+  events.on('squareClick', computerGame)
+  computerGame()
+  alert('computer')
+  }
+}
   
   events.on('boardChanged', checkWin)
   events.on('boardChanged', whoseTurn)
@@ -99,17 +107,17 @@ function whoseTurn(input){
   
  
 
-  //computer Btn
-  computerPlayBtn.addEventListener('click', computerBtn)
-  function computerBtn(){
-    events.emit('computerBtn','')
-  }
-  events.on('computerBtn', computerUnBind)
+//   //computer Btn
+//   computerPlayBtn.addEventListener('click', computerBtn)
+//   function computerBtn(){
+//     events.emit('computerBtn','')
+//   }
+//   events.on('computerBtn', computerUnBind)
   
   
-function computerUnBind(){
-   events.off('squareClick', markBoard)
-}
+// function computerUnBind(){
+//    events.off('squareClick', markBoard)
+// }
 
  
 
@@ -172,7 +180,7 @@ function computerGame(x){
 }
   function computerGameHumanMove(x){
     
-      if(x==""){return}
+      if(x==undefined){return}
       else if (square[x].textContent=="X" || square[x].textContent=="O")
       {alert ('Choose another Square')
       myGame.playerTurn=0}
@@ -273,13 +281,14 @@ function computerMove(){
        }
   
        let rand = getRandomIntInclusive(0, empties.length-1)
-          console.log('rand is '+ rand)
+          // console.log('rand is '+ rand)
        let answer = empties[rand]
-      console.log(answer)
+      // console.log(answer)
    
       return answer
       }
-      for(let i=0; i<100; i++){if (i<100){computerMove()}}
+      // for(let i=0; i<100; i++){if (i<100){computerMove()}}
+
   function checkWin() {
     if(
     myGame.Gameboard[0]==myGame.Gameboard[1]&&myGame.Gameboard[0]==myGame.Gameboard[2]&&myGame.Gameboard[0]!=='' ||
@@ -299,8 +308,8 @@ function computerMove(){
         // myGame.unbindEvents()
         
         //need to unbind event listener once someone has won
-    };
-    if (myGame.Gameboard.indexOf('')==-1){
+    }
+    else if (myGame.Gameboard.indexOf('')==-1){
         alert('draw')
         // this.progress.textContent = 'The Game is a Draw'
         // this.render()
