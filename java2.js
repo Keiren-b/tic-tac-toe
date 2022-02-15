@@ -227,34 +227,59 @@ function computerGame(x){
 //          alert()
 //      }
 
-function computerMove(){
-let empties = [];
+// function computerMove(){
+// let empties = [];
 
-     function emptyIndex(){
+//      function emptyIndex(){
        
          
-        for (let i=0; i<myGame.Gameboard.length; i++){
-            if(myGame.Gameboard[i]==""){
-                empties.push(i)
-            }
-            else{}
-        }}
-     emptyIndex()
+//         for (let i=0; i<9; i++){
+//             if(myGame.Gameboard[i]==""){
+//                 empties.push(i)
+//             }
+//             else{}
+//         }}
+//      emptyIndex()
 
-     function getRandomIntInclusive(min, max) {
+//      function getRandomIntInclusive(min, max) {
   
-        return Math.floor(Math.random() * (max - min + 1) + min); 
-     }
+//         return Math.floor(Math.random() * (max - min + 1) + min); 
+//      }
 
-     let rand = getRandomIntInclusive(0, empties.length)
-    //  if(rand=9){()=>alert('rand = '+rand)}
-     let answer = empties[rand]
+//      let rand = getRandomIntInclusive(0, empties.length)
+//     //  if(rand=9){()=>alert('rand = '+rand)}
+//      let answer = empties[rand]
  
-    return answer
-    }
+//     return answer
+//     }
 
- 
-
+function computerMove(){
+  let empties = [];
+  
+       function emptyIndex(){
+         
+           
+          for (let i=0; i<=9; i++){
+              if(myGame.Gameboard[i]==""){
+                  empties.push(i)
+              }
+              else{}
+          }}
+       emptyIndex()
+  
+       function getRandomIntInclusive(min, max) {
+    
+          return Math.floor(Math.random() * (max - min + 1) + min); 
+       }
+  
+       let rand = getRandomIntInclusive(0, empties.length-1)
+          console.log('rand is '+ rand)
+       let answer = empties[rand]
+      console.log(answer)
+   
+      return answer
+      }
+      for(let i=0; i<100; i++){if (i<100){computerMove()}}
   function checkWin() {
     if(
     myGame.Gameboard[0]==myGame.Gameboard[1]&&myGame.Gameboard[0]==myGame.Gameboard[2]&&myGame.Gameboard[0]!=='' ||

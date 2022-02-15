@@ -1,0 +1,222 @@
+Violation] 'click' handler took 8718ms
+function computerMove(){
+let empties = [];
+
+     function emptyIndex(){
+       
+         
+        for (let i=0; i<9; i++){
+            if(myGame.Gameboard[i]==""){
+                empties.push(i)
+            }
+            else{}
+        }}
+     emptyIndex()
+
+     function getRandomIntInclusive(min, max) {
+  
+        return Math.floor(Math.random() * (max - min + 1) + min); 
+     }
+
+     let rand = getRandomIntInclusive(0, empties.length)
+    //  if(rand=9){()=>alert('rand = '+rand)}
+     let answer = empties[rand]
+ 
+    return answer
+    }
+undefined
+function computerMove(){
+let empties = [];
+
+     function emptyIndex(){
+       
+         
+        for (let i=0; i<9; i++){
+            if(myGame.Gameboard[i]==""){
+                empties.push(i)
+            }
+            else{}
+        }}
+     emptyIndex()
+
+     function getRandomIntInclusive(min, max) {
+  
+        return Math.floor(Math.random() * (max - min + 1) + min); 
+     }
+
+     let rand = getRandomIntInclusive(0, empties.length)
+    console.log(rand)
+    //  if(rand=9){()=>alert('rand = '+rand)}
+     let answer = empties[rand]
+ 
+    return answer
+    }
+undefined
+function computerMove(){
+let empties = [];
+
+     function emptyIndex(){
+       
+         
+        for (let i=0; i<9; i++){
+            if(myGame.Gameboard[i]==""){
+                empties.push(i)
+            }
+            else{}
+        }}
+     emptyIndex()
+
+     function getRandomIntInclusive(min, max) {
+  
+        return Math.floor(Math.random() * (max - min + 1) + min); 
+     }
+
+     let rand = getRandomIntInclusive(0, empties.length)
+    console.log(rand)
+    //  if(rand=9){()=>alert('rand = '+rand)}
+     let answer = empties[rand]
+ 
+    return answer
+    }
+undefined
+computerMove()
+VM10351:21 3
+4
+computerMove()
+VM10351:21 7
+8
+function computerMove(){
+let empties = [];
+
+     function emptyIndex(){
+       
+         
+        for (let i=0; i<9; i++){
+            if(myGame.Gameboard[i]==""){
+                empties.push(i)
+            }
+            else{}
+        }}
+     emptyIndex()
+
+     function getRandomIntInclusive(min, max) {
+  
+        return Math.floor(Math.random() * (max - min + 1) + min); 
+     }
+
+     let rand = getRandomIntInclusive(0, empties.length)
+    // console.log(rand)
+    //  if(rand=9){()=>alert('rand = '+rand)}
+     let answer = empties[rand]
+ 
+    return answer
+    }
+undefined
+computerMove()
+8
+computerMove()
+7
+for (let i=0; i<50; i++){
+    if (i<50){computerMove(); console.log(i)}}
+    
+VM10712:2 0
+VM10712:2 1
+VM10712:2 2
+VM10712:2 3
+VM10712:2 4
+VM10712:2 5
+VM10712:2 6
+VM10712:2 7
+VM10712:2 8
+VM10712:2 9
+VM10712:2 10
+VM10712:2 11
+VM10712:2 12
+VM10712:2 13
+VM10712:2 14
+VM10712:2 15
+VM10712:2 16
+VM10712:2 17
+VM10712:2 18
+VM10712:2 19
+VM10712:2 20
+VM10712:2 21
+VM10712:2 22
+VM10712:2 23
+VM10712:2 24
+VM10712:2 25
+VM10712:2 26
+VM10712:2 27
+VM10712:2 28
+VM10712:2 29
+VM10712:2 30
+VM10712:2 31
+VM10712:2 32
+VM10712:2 33
+VM10712:2 34
+VM10712:2 35
+VM10712:2 36
+VM10712:2 37
+VM10712:2 38
+VM10712:2 39
+VM10712:2 40
+VM10712:2 41
+VM10712:2 42
+VM10712:2 43
+VM10712:2 44
+VM10712:2 45
+VM10712:2 46
+VM10712:2 47
+VM10712:2 48
+VM10712:2 49
+undefined
+for (let i=0; i<50; i++){
+    if (i<50){console.log(computerMove())}}
+VM10792:2 8
+VM10792:2 undefined
+VM10792:2 3
+VM10792:2 6
+VM10792:2 0
+VM10792:2 8
+VM10792:2 1
+VM10792:2 3
+VM10792:2 1
+VM10792:2 6
+VM10792:2 undefined
+VM10792:2 4
+2VM10792:2 8
+VM10792:2 7
+2VM10792:2 0
+VM10792:2 7
+VM10792:2 3
+VM10792:2 undefined
+VM10792:2 8
+2VM10792:2 undefined
+VM10792:2 6
+VM10792:2 4
+VM10792:2 7
+VM10792:2 8
+VM10792:2 5
+VM10792:2 undefined
+VM10792:2 4
+VM10792:2 6
+VM10792:2 7
+VM10792:2 undefined
+VM10792:2 1
+2VM10792:2 3
+VM10792:2 4
+VM10792:2 0
+2VM10792:2 7
+VM10792:2 undefined
+VM10792:2 4
+VM10792:2 3
+VM10792:2 1
+VM10792:2 5
+VM10792:2 1
+VM10792:2 3
+VM10792:2 7
+VM10792:2 0
+VM10792:2 1
+undefined
+for (let i=0; i<50; i++){
+    if (i<50){console.log(computerMove()+' '+ rand)}}
