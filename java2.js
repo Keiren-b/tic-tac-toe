@@ -117,8 +117,37 @@ events.on('callComputer', computerGameComputerMove)
 
 
 
+var events = {
+    events: {},
+    on: function (eventName, fn) {
+      this.events[eventName] = this.events[eventName] || [];
+      this.events[eventName].push(fn);
+    },
+    off: function(eventName, fn) {
+      if (this.events[eventName]) {
+        for (var i = 0; i < this.events[eventName].length; i++) {
+          if (this.events[eventName][i] === fn) {
+            this.events[eventName].splice(i, 1);
+            break;
+          }
+        };
+      }
+    },
+    emit: function (eventName, data) {
+      if (this.events[eventName]) {
+        this.events[eventName].forEach(function(fn) {
+          fn(data);
+        });
+      }
+    }
+  };
 //********************************************************************* */
-
+const myGame = {
+    Gameboard: ['','','','','','','','',''],
+    Players: [],
+    playerTurn: '',
+    computerPlayer: false
+}
 //********************************************************************* */
 
 function whoseTurn(input){
@@ -141,11 +170,72 @@ function whoseTurn(input){
 
 // there are issues with presing play button once and not being able to call multiple functions
 //cache
-
+  square = document.querySelectorAll('.square')
+  playBtn = document.getElementById('playBtn')
+  computerPlayBtn = document.getElementById('computerPlay')
+  input = document.querySelectorAll('input')
+  resetBtn = document.getElementById('reset')
 
   //bind
 
+  //RESET BUTTON
+  resetBtn.addEventListener('click', reset)
+  //PLAY BUTTON
+  playBtn.addEventListener('click', playBtnUpdate)
   
+  function playBtnUpdate(){
+    events.emit('playBtn', 'human')
+  }
+  events.on('playBtn', assignPlayers)
+  events.on('playBtn', squareEventListenerAdd)
+  events.on('playBtn', whoseTurn)
+  events.on('playBtn', compOrNot)
+  events.on('playBtn', hideDivs)
+  events.on('playBtn', updateProgress)
+  events.on('playBtn', render)
+
+  // COMPUTER BUTTON
+  computerPlayBtn.addEventListener('click', computerPlayBtnUpdate)
+  
+  function computerPlayBtnUpdate(){
+    events.emit('computerPlayBtn', 'computer')
+  }
+  events.on('computerPlayBtn', assignPlayers)
+  events.on('computerPlayBtn', squareEventListenerAdd)
+  events.on('computerPlayBtn', whoseTurn)
+  events.on('computerPlayBtn', compOrNot)
+  events.on('computerPlayBtn', hideDivs)
+  events.on('computerPlayBtn', updateProgress)
+  events.on('computerPlayBtn', render)
+
+      function squareEventListenerAdd(input){
+      square.forEach(item =>{item.addEventListener('click', clickUpdate)})
+      }
+
+  function clickUpdate(e){
+    // e.target.textContent=e.target.getAttribute('data-index')
+    events.emit('squareClick', e.target.getAttribute('data-index'))
+  }
+
+  function compOrNot(check){
+  if(check=='human'){
+  events.on('squareClick', markBoard)
+
+  }
+  else if (check=='computer'){
+  events.on('squareClick', computerGame)
+  computerGame()
+
+  }
+}
+  
+  events.on('boardChanged', checkWin)
+  events.on('boardChanged', whoseTurn)
+  events.on('boardChanged', updateProgress)
+  events.on('callComputer', computerGameComputerMove)
+
+
+ 
 
 //   //computer Btn
 //   computerPlayBtn.addEventListener('click', computerBtn)
@@ -446,6 +536,3 @@ function updateProgress(){
 function reset(){
   location.reload()
 }
-
-
-myGame.init()
