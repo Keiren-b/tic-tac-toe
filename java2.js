@@ -144,7 +144,6 @@ var events = {
 //********************************************************************* */
 const myGame = {
     Gameboard: ['','','','','','','','',''],
-    Players: [],
     playerTurn: '',
     computerPlayer: false
 }
@@ -173,26 +172,19 @@ function whoseTurn(input){
   square = document.querySelectorAll('.square')
   playBtn = document.getElementById('playBtn')
   computerPlayBtn = document.getElementById('computerPlay')
-  input = document.querySelectorAll('input')
-  resetBtn = document.getElementById('reset')
+
 
   //bind
-
-  //RESET BUTTON
-  resetBtn.addEventListener('click', reset)
   //PLAY BUTTON
   playBtn.addEventListener('click', playBtnUpdate)
   
   function playBtnUpdate(){
     events.emit('playBtn', 'human')
   }
-  events.on('playBtn', assignPlayers)
+
   events.on('playBtn', squareEventListenerAdd)
   events.on('playBtn', whoseTurn)
   events.on('playBtn', compOrNot)
-  events.on('playBtn', hideDivs)
-  events.on('playBtn', updateProgress)
-  events.on('playBtn', render)
 
   // COMPUTER BUTTON
   computerPlayBtn.addEventListener('click', computerPlayBtnUpdate)
@@ -200,13 +192,9 @@ function whoseTurn(input){
   function computerPlayBtnUpdate(){
     events.emit('computerPlayBtn', 'computer')
   }
-  events.on('computerPlayBtn', assignPlayers)
   events.on('computerPlayBtn', squareEventListenerAdd)
   events.on('computerPlayBtn', whoseTurn)
   events.on('computerPlayBtn', compOrNot)
-  events.on('computerPlayBtn', hideDivs)
-  events.on('computerPlayBtn', updateProgress)
-  events.on('computerPlayBtn', render)
 
       function squareEventListenerAdd(input){
       square.forEach(item =>{item.addEventListener('click', clickUpdate)})
@@ -220,21 +208,20 @@ function whoseTurn(input){
   function compOrNot(check){
   if(check=='human'){
   events.on('squareClick', markBoard)
-
+  alert('human')
   }
   else if (check=='computer'){
   events.on('squareClick', computerGame)
   computerGame()
-
+  alert('computer')
   }
 }
   
   events.on('boardChanged', checkWin)
   events.on('boardChanged', whoseTurn)
-  events.on('boardChanged', updateProgress)
   events.on('callComputer', computerGameComputerMove)
 
-
+  
  
 
 //   //computer Btn
@@ -257,11 +244,7 @@ function whoseTurn(input){
   function render(){
     square.forEach(item =>{
         item.textContent=myGame.Gameboard[item.getAttribute('data-index')]
-    })
-  player1Banner.textContent="Player 1 is..."+myGame.Players[0].name+". "+myGame.Players[0].name+'\'s symbol is...'+myGame.Players[0].marker;
-  player2Banner.textContent="Player 2 is..."+myGame.Players[1].name+". "+myGame.Players[1].name+'\'s symbol is...'+myGame.Players[1].marker;
-  }
-
+    })}
 
 
 // *** This shouldn't be on until the play button is clicked ====> perhaps put events off in init function?
@@ -336,6 +319,65 @@ function computerGame(x){
   
   }
 
+
+
+
+  //   if (myGame.playerTurn==0){
+
+  //     myGame.Gameboard[x]="X"
+  //     render()
+  //     events.emit('boardChanged', '')
+  //   }
+  //   else if (myGame.playerTurn==1){
+       
+  //       myGame.Gameboard[computerMove()]='O'
+  //       render()
+  //       events.emit('boardChanged', '')
+  //     }
+  // }
+  
+
+
+//   function rand(){
+//     return Math.floor(Math.random() * (8 - 0 + 1) + 0)
+//   }
+
+//   function searchGamboard(num){
+//       return myGame.Gameboard[num]
+//   }
+//   function computer(){
+//      let num = rand()
+//      let search = searchGamboard(num)
+//      if (search == "X" || search == "O"){
+//          alert()
+//      }
+
+// function computerMove(){
+// let empties = [];
+
+//      function emptyIndex(){
+       
+         
+//         for (let i=0; i<9; i++){
+//             if(myGame.Gameboard[i]==""){
+//                 empties.push(i)
+//             }
+//             else{}
+//         }}
+//      emptyIndex()
+
+//      function getRandomIntInclusive(min, max) {
+  
+//         return Math.floor(Math.random() * (max - min + 1) + min); 
+//      }
+
+//      let rand = getRandomIntInclusive(0, empties.length)
+//     //  if(rand=9){()=>alert('rand = '+rand)}
+//      let answer = empties[rand]
+ 
+//     return answer
+//     }
+
 function computerMove(){
   let empties = [];
   
@@ -362,177 +404,33 @@ function computerMove(){
    
       return answer
       }
+      // for(let i=0; i<100; i++){if (i<100){computerMove()}}
 
-
-function checkWin() {
+  function checkWin() {
     if(
-    myGame.Gameboard[0]==myGame.Gameboard[1]&&myGame.Gameboard[0]==myGame.Gameboard[2]&&myGame.Gameboard[0]!=='')
-    {square[0].classList.add('winner')
-    square[1].classList.add('winner')
-    square[2].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-    
-    else if 
-    (myGame.Gameboard[3]==myGame.Gameboard[4]&&myGame.Gameboard[3]==myGame.Gameboard[5] &&myGame.Gameboard[3]!=='')
-    {square[3].classList.add('winner')
-    square[4].classList.add('winner')
-    square[5].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if(
-    myGame.Gameboard[6]==myGame.Gameboard[7]&&myGame.Gameboard[6]==myGame.Gameboard[8] &&myGame.Gameboard[6]!=='')
-    {square[6].classList.add('winner')
-    square[7].classList.add('winner')
-    square[8].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if(
-    myGame.Gameboard[0]==myGame.Gameboard[3]&&myGame.Gameboard[0]==myGame.Gameboard[6] &&myGame.Gameboard[0]!=='')
-    {square[0].classList.add('winner')
-    square[3].classList.add('winner')
-    square[6].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if(
-    myGame.Gameboard[1]==myGame.Gameboard[4]&&myGame.Gameboard[1]==myGame.Gameboard[7] &&myGame.Gameboard[1]!=='')
-    {square[1].classList.add('winner')
-    square[4].classList.add('winner')
-    square[7].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if(
-    myGame.Gameboard[2]==myGame.Gameboard[5]&&myGame.Gameboard[2]==myGame.Gameboard[8] &&myGame.Gameboard[2]!=='')
-    {square[2].classList.add('winner')
-    square[5].classList.add('winner')
-    square[8].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if (
-    myGame.Gameboard[0]==myGame.Gameboard[4]&&myGame.Gameboard[0]==myGame.Gameboard[8] &&myGame.Gameboard[0]!=='')
-    {square[0].classList.add('winner')
-    square[4].classList.add('winner')
-    square[8].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-
-    else if (
-    myGame.Gameboard[2]==myGame.Gameboard[4]&&myGame.Gameboard[2]==myGame.Gameboard[6] &&myGame.Gameboard[2]!=='')
-    {square[2].classList.add('winner')
-    square[4].classList.add('winner')
-    square[6].classList.add('winner')
-    progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
-    events.off('boardChanged', checkWin)
-    events.off('boardChanged', whoseTurn)
-    events.off('boardChanged', updateProgress)
-    events.off('squareClick', markBoard)
-    events.off('squareClick', computerGame)
-    events.off('callComputer', computerGameComputerMove)
-    render()}
-    
+    myGame.Gameboard[0]==myGame.Gameboard[1]&&myGame.Gameboard[0]==myGame.Gameboard[2]&&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[3]==myGame.Gameboard[4]&&myGame.Gameboard[3]==myGame.Gameboard[5] &&myGame.Gameboard[3]!==''  ||
+    myGame.Gameboard[6]==myGame.Gameboard[7]&&myGame.Gameboard[6]==myGame.Gameboard[8] &&myGame.Gameboard[6]!=='' ||
+    myGame.Gameboard[0]==myGame.Gameboard[3]&&myGame.Gameboard[0]==myGame.Gameboard[6] &&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[1]==myGame.Gameboard[4]&&myGame.Gameboard[1]==myGame.Gameboard[7] &&myGame.Gameboard[1]!=='' ||
+    myGame.Gameboard[2]==myGame.Gameboard[5]&&myGame.Gameboard[2]==myGame.Gameboard[8] &&myGame.Gameboard[2]!=='' ||
+    myGame.Gameboard[0]==myGame.Gameboard[4]&&myGame.Gameboard[0]==myGame.Gameboard[8] &&myGame.Gameboard[0]!=='' ||
+    myGame.Gameboard[2]==myGame.Gameboard[4]&&myGame.Gameboard[2]==myGame.Gameboard[6] &&myGame.Gameboard[2]!==''
+    )
             
-
-    
+    {   
+        alert('winner')
+        // myGame.progress.textContent = myGame.Players[myGame.playerTurn].name + " is the winner";
+        // myGame.render()
+        // myGame.unbindEvents()
+        
+        //need to unbind event listener once someone has won
+    }
     else if (myGame.Gameboard.indexOf('')==-1){
-
-        progress.textContent = 'The Game is a Draw'
-        events.off('boardChanged', checkWin)
-        events.off('boardChanged', whoseTurn)
-        events.off('boardChanged', updateProgress)
-        events.off('squareClick', markBoard)
-        events.off('squareClick', computerGame)
-        events.off('callComputer', computerGameComputerMove)
-        render()
-      
+        alert('draw')
+        // this.progress.textContent = 'The Game is a Draw'
+        // this.render()
+        // this.unbindEvents()
         
         }
     }
-  
-
-   
-
-    input[0].value = 'Keiren'
-    input[1].value = 'James'
-
-function Player(name, marker){
-      this.name = name
-      this.marker = marker
-  }
-
-function assignPlayers(check){
-    const player1 = new Player(input[0].value,'X');
-    myGame.Players.push(player1);
-
-    if(check=='computer'){
-        const player2 = new Player('The Computer','O');
-        myGame.Players.push(player2);
-    }
-    else if (check=='human'){
-        const player2 = new Player(input[1].value,'O');
-        myGame.Players.push(player2);
-    }
-}
-
-function hideDivs(){        
-  this.playBtn.classList.add('hidden')
-  this.input[0].classList.add('hidden')
-  this.input[1].classList.add('hidden')
-  this.computerPlayBtn.classList.add('hidden')
-}
-
-function updateProgress(){
-  if (this.playerTurn!==''){
-  this.progress.textContent = 'It is '+myGame.Players[myGame.playerTurn].name+'\'s turn'
-  }
-}
-
-function reset(){
-  location.reload()
-}
