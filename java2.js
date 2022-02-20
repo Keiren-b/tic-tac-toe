@@ -53,7 +53,7 @@ this.resetBtn.addEventListener('click', this.reset)
 //PLAY BUTTON
 this.playBtn = this.playBtn.bind(this)
 this.playBtn.addEventListener('click', this.playBtnUpdate)
-
+,
 playBtnUpdate: function(){
   events.emit('playBtn', 'human')
 }
